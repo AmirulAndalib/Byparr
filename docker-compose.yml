@@ -1,0 +1,23 @@
+services:
+  byparr:
+    image: ghcr.io/thephaseless/byparr:main
+    container_name: byparr
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      TZ: "Pacific/Auckland"     # Set timezone
+      PUID: "1000"               # User ID for permissions
+      PGID: "1000"               # Group ID for permissions
+      MAX_CHROME_LIFETIME: "300"
+      USE_HEADLESS: "true"       # Use headless Chromium
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock 
+    ports:
+      - "8191:8191"
+    networks:
+      - nginx-network
+
+networks:
+  nginx-network:
+    external: true
